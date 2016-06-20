@@ -166,7 +166,7 @@
 
 //canvas.getContext("2d");
 
-var dataURL = ctx.canvas.toDataURL( "image/png" );
+var dataURL = ctx.canvas.toDataURL( "image/jpg" );
 var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
     asArray = new Uint8Array(data.length);
 
@@ -174,7 +174,7 @@ for( var i = 0, len = data.length; i < len; ++i ) {
     asArray[i] = data.charCodeAt(i);    
 }
 
-var blob = new Blob( [ asArray.buffer ], {type: "image/png"} );
+var blob = new Blob( [ asArray.buffer ], {type: "image/jpg"} );
 
 // var img = document.createElement("img");
 // img.src = (window.webkitURL || window.URL).createObjectURL( blob );
