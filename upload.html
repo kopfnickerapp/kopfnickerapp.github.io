@@ -126,17 +126,22 @@
       // var s = window.atob(png);
       // console.log(png);
       
-      // var z = new Blob([s],  {type: 'image/jpg'});
-      // z.lastModifiedDate = new Date();
-      // z.name = window.name;
-      // console.log(z);
+       var blob = new Blob([s],  {type: 'image/jpg'});
+       blob.lastModifiedDate = new Date();
+       blob.name = window.name;
+       console.log(blob);
 
       var o = ctx.canvas.toDataURL();
       var myimage = new Image();
-      myimage.src = o;
+      myimage.src = URL.createObjectURL(blob);
+      
+
+      
+myimage.id = 'asdf';
+document.body.appendChild(image);
 
       var uploader = new MediaUploader({
-                 file: myimage,
+                 file: document.getElementById('asdf'),
                  token: accessToken,
                  onComplete: function(data) {
                      var element = document.createElement("pre");
