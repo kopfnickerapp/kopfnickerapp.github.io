@@ -158,12 +158,12 @@
       // document.body.appendChild(img);
 
 
-var canvas = document.createElement("canvas");
-canvas.width = canvas.height = 600;
+//var canvas = document.createElement("canvas");
+//canvas.width = canvas.height = 600;
 
-canvas.getContext("2d").fillRect(20, 20, 20, 20);
+//canvas.getContext("2d");
 
-var dataURL = canvas.toDataURL( "image/png" );
+var dataURL = ctx.canvas.toDataURL( "image/png" );
 var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
     asArray = new Uint8Array(data.length);
 
