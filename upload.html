@@ -197,7 +197,7 @@ setTimeout(function(){
          thumpImg.src = JSON.parse(data).thumbnailLink;
          document.getElementById('thumpImg').appendChild(thumpImg);
          var bigImg = document.createElement('img');
-         bigImg.src = JSON.parse(data).webContentLink;
+         bigImg.src = 'https://drive.google.com/uc?id='+JSON.parse(data).id;
          document.getElementById('thumpImg').appendChild(bigImg);
      }
   });
