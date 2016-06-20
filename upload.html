@@ -121,35 +121,62 @@
     var f = function f(ctx) {
       
       
-      var o = ctx.canvas.toDataURL('image/jpg');
-      var png = o.split(',')[1];
-      var s = window.atob(png);
-      console.log(png);
+      // var o = ctx.canvas.toDataURL('image/png');
+      // var png = o.split(',')[1];
+      // var s = window.atob(png);
+      // console.log(png);
       
-      var blob = new Blob([s],  {type: 'image/jpg'});
-      blob.lastModifiedDate = new Date();
-      blob.name = window.name;
-      console.log(blob);
+      // var blob = new Blob([s],  {type: 'image/png'});
+      // blob.lastModifiedDate = new Date();
+      // blob.name = window.name;
+      // console.log(blob);
 
-      var o = ctx.canvas.toDataURL();
-      var myimage = new Image();
-      myimage.src = URL.createObjectURL(blob);
+      // var o = ctx.canvas.toDataURL();
+      // var myimage = new Image();
+      // myimage.src = URL.createObjectURL(blob);
+
+
+
+      var canvas = ctx.canvas;
+      canvas.width = canvas.height = 600;
+
+      //canvas.getContext("2d").fillRect(20, 20, 20, 20);
+
+      var dataURL = canvas.toDataURL( "image/png" );
+      var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
+          asArray = new Uint8Array(data.length);
+
+      for( var i = 0, len = data.length; i < len; ++i ) {
+          asArray[i] = data.charCodeAt(i);    
+      }
+
+      var blob = new Blob( [ asArray.buffer ], {type: "image/png"} );
+
+      var img = document.createElement("img");
+      img.src = (window.webkitURL || window.URL).createObjectURL( blob );
+      img.id = 'asdf';
+      document.body.appendChild(img);
+
       
 
       
-myimage.id = 'asdf';
-document.body.appendChild(myimage);
+//myimage.id = 'asdf';
+//document.body.appendChild(myimage);
 
-      var uploader = new MediaUploader({
-                 file: document.getElementById('asdf'),
-                 token: accessToken,
-                 onComplete: function(data) {
-                     var element = document.createElement("pre");
-                     element.appendChild(document.createTextNode(data));
-                     document.getElementById('results').appendChild(element);
-                 }
-             });
-             uploader.upload();
+setTimeout(function(){
+  var uploader = new MediaUploader({
+     file: document.getElementById('asdf'),
+     token: accessToken,
+     onComplete: function(data) {
+         var element = document.createElement("pre");
+         element.appendChild(document.createTextNode(data));
+         document.getElementById('results').appendChild(element);
+     }
+  });
+  uploader.upload();
+}, 2000);
+
+      
   }
 
 
