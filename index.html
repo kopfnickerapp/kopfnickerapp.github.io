@@ -71,10 +71,10 @@
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         appendPre(file.title + ' (' + file.id + ')');
-                        appendImg(file.selfLink);
+                        appendImg(file.webContentLink);
                     }
                 } else {
-                    appendPre('No files found.');
+                    appendPre('No files found. ');
                 }
             });
         }
@@ -98,7 +98,6 @@
             pre.appendChild(img);
         }
 
-    
 
     </script>
     <script src="https://apis.google.com/js/client.js?onload=checkAuth">
