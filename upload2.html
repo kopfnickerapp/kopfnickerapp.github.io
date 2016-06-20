@@ -22,12 +22,31 @@
         newImage.src = srcData;
 
         document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-        alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
-        console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+        f();
+
       }
       fileReader.readAsDataURL(fileToLoad);
     }
   }
+
+
+  	var f = function f() {
+	    var img = document.getElementById("imgTest");
+	    var h = img.height, w = img.width;
+	    var canvas = document.createElement('canvas');
+	    canvas.width = w;
+	    canvas.height = h;
+	    
+	    var o = canvas.toDataURL('image/png');
+	    var png = o.split(',')[1];
+	    var s = window.atob(png);
+	    console.log(png);
+	    
+	    var z = new Blob([s],  {type: 'image/png'});
+	    console.log(z);
+	}
+
+
 </script>
 </body>
 </html>
