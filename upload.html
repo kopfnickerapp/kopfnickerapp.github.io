@@ -173,18 +173,18 @@ for( var i = 0, len = data.length; i < len; ++i ) {
 
 var blob = new Blob( [ asArray.buffer ], {type: "image/png"} );
 
-var img = document.createElement("img");
-img.src = (window.webkitURL || window.URL).createObjectURL( blob );
-document.body.appendChild(img);
+// var img = document.createElement("img");
+// img.src = (window.webkitURL || window.URL).createObjectURL( blob );
+// document.body.appendChild(img);
       
 
       
-img.id = 'asdf';
+//img.id = 'asdf';
 //document.body.appendChild(myimage);
 
 setTimeout(function(){
   var uploader = new MediaUploader({
-     file: document.getElementById('asdf'),
+     file: new File([blob], "testfile"),
      token: accessToken,
      onComplete: function(data) {
          var element = document.createElement("pre");
