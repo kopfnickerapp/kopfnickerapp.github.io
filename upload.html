@@ -96,6 +96,7 @@
     var ctx = document.getElementById('canvas').getContext('2d');
     var reader  = new FileReader();
     var file = e.target.files[0];
+    window.name = file.name;
     // load to image to get it's width/height
     var img = new Image();
     img.onload = function() {
@@ -120,14 +121,14 @@
     var f = function f(ctx) {
       
       
-      var o = ctx.canvas.toDataURL('image/png');
+      var o = ctx.canvas.toDataURL('image/jpg');
       var png = o.split(',')[1];
       var s = window.atob(png);
       console.log(png);
       
-      var z = new Blob([s],  {type: 'image/png'});
-      //z.lastModifiedDate = new Date();
-      //z.name = 'fileName.png';
+      var z = new Blob([s],  {type: 'image/jpg'});
+      z.lastModifiedDate = new Date();
+      z.name = window.name;
       console.log(z);
 
       var uploader = new MediaUploader({
