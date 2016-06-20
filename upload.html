@@ -56,25 +56,16 @@
          
          var output = [];
          for (var i = 0, f; f = files[i]; i++) {
-          var reader = new FileReader();
-            reader.readAsBinaryString(f);
-            reader.onload = function (e) {
-              var base64Data = btoa(reader.result);
-              console.log('vor btoa'+reader.result+'_____________________________________');
-              console.log('...........................................nach btoa'+base64Data);
-            }
-            
-          console.log(f);
-             // var uploader = new MediaUploader({
-             //     file: f,
-             //     token: accessToken,
-             //     onComplete: function(data) {
-             //         var element = document.createElement("pre");
-             //         element.appendChild(document.createTextNode(data));
-             //         document.getElementById('results').appendChild(element);
-             //     }
-             // });
-             // uploader.upload();
+             var uploader = new MediaUploader({
+                 file: f,
+                 token: accessToken,
+                 onComplete: function(data) {
+                     var element = document.createElement("pre");
+                     element.appendChild(document.createTextNode(data));
+                     document.getElementById('results').appendChild(element);
+                 }
+             });
+             uploader.upload();
          }
        }
 
