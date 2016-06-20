@@ -37,7 +37,7 @@
   	var f = function f(ctx) {
 	    
 	    
-	    var o = ctx.toDataURL('image/png');
+	    var o = ctx.canvas.toDataURL('image/png');
 	    var png = o.split(',')[1];
 	    var s = window.atob(png);
 	    console.log(png);
