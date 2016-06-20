@@ -28,6 +28,7 @@
       <div id="drop_zone" style="display:none;">Drop files here</div>
      
      <div id="results"/>
+     <div id="thumpImg"/>
 
      <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL(event);" />
      <canvas width="400" height="300" id="canvas"/>
@@ -192,6 +193,12 @@ setTimeout(function(){
          var element = document.createElement("pre");
          element.appendChild(document.createTextNode(data));
          document.getElementById('results').appendChild(element);
+         var thumpImg = document.createElement('img');
+         thumpImg.src = JSON.parse(data).thumbnailLink;
+         document.getElementById('thumpImg').appendChild(thumpImg);
+         var bigImg = document.createElement('img');
+         bigImg.src = JSON.parse(data).webContentLink;
+         document.getElementById('thumpImg').appendChild(bigImg);
      }
   });
   uploader.upload();
