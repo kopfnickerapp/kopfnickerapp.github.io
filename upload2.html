@@ -11,18 +11,33 @@
   function encodeImageFileAsURL(e) {
 
     var ctx = document.getElementById('canvas').getContext('2d');
-    ctx.drawImage(e.target.files[0], 20,20);
+    var reader  = new FileReader();
+    var file = e.target.files[0];
+    // load to image to get it's width/height
+    var img = new Image();
+    img.onload = function() {
+        // scale canvas to image
+        ctx.canvas.width = img.width;
+        ctx.canvas.height = img.height;
+        // draw image
+        ctx.drawImage(img, 0, 0
+            , ctx.canvas.width, ctx.canvas.height
+        );
+    }
+    // this is to setup loading the image
+    reader.onloadend = function () {
+        img.src = reader.result;
+        f(ctx);
+    }
+    // this is to read the file
+   	reader.readAsDataURL(file);
   }
 
 
-  	var f = function f() {
-	    var img = document.getElementById("imgTest").childNodes[0];
-	    var h = img.height, w = img.width;
-	    var canvas = document.createElement('canvas');
-	    canvas.width = w;
-	    canvas.height = h;
+  	var f = function f(ctx) {
 	    
-	    var o = canvas.toDataURL('image/png');
+	    
+	    var o = ctx.toDataURL('image/png');
 	    var png = o.split(',')[1];
 	    var s = window.atob(png);
 	    console.log(png);
