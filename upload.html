@@ -111,7 +111,9 @@
     // this is to setup loading the image
     reader.onloadend = function () {
         img.src = reader.result;
-        f(ctx);
+        setTimeout(function(){
+            f(ctx);
+        }, 1000);
     }
     // this is to read the file
     reader.readAsDataURL(file);
