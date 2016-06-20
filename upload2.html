@@ -1,7 +1,18 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-   
+   <style>
+    #drop_zone {
+      border: 2px dashed #bbb;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      padding: 25px;
+      text-align: center;
+      font: 20pt bold 'Helvetica';
+      color: #bbb;
+    }
+    </style>
   </head>
   <body>
   	<span id="signin">
@@ -13,10 +24,12 @@
           data-scope="https://www.googleapis.com/auth/drive.file">
         </span>
       </span>
+      <div id="drop_zone" style="display:none;">Drop files here</div>
   <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL(event);" />
+  <div id="results"/>
   <canvas width="400" height="300" id="canvas"/>
 
-<div id="results"/>
+
      <script src="upload.js"></script>
 <script type='text/javascript'>
 
@@ -67,6 +80,8 @@ var accessToken = null;
 	    console.log(png);
 	    
 	    var z = new Blob([s],  {type: 'image/png'});
+	    z.lastModifiedDate = new Date();
+    	z.name = 'fileName.png';
 	    console.log(z);
 
 	    var uploader = new MediaUploader({

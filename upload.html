@@ -28,6 +28,9 @@
       <div id="drop_zone" style="display:none;">Drop files here</div>
      
      <div id="results"/>
+
+     <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL(event);" />
+     <canvas width="400" height="300" id="canvas"/>
      <script src="upload.js"></script>
      <script type="text/javascript">
      
@@ -86,6 +89,58 @@
            dropZone.addEventListener('dragover', handleDragOver, false);
            dropZone.addEventListener('drop', handleFileSelect, false);
        });
+
+
+       function encodeImageFileAsURL(e) {
+
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var reader  = new FileReader();
+    var file = e.target.files[0];
+    // load to image to get it's width/height
+    var img = new Image();
+    img.onload = function() {
+        // scale canvas to image
+        ctx.canvas.width = img.width;
+        ctx.canvas.height = img.height;
+        // draw image
+        ctx.drawImage(img, 0, 0
+            , ctx.canvas.width, ctx.canvas.height
+        );
+    }
+    // this is to setup loading the image
+    reader.onloadend = function () {
+        img.src = reader.result;
+        f(ctx);
+    }
+    // this is to read the file
+    reader.readAsDataURL(file);
+  }
+
+
+    var f = function f(ctx) {
+      
+      
+      var o = ctx.canvas.toDataURL('image/png');
+      var png = o.split(',')[1];
+      var s = window.atob(png);
+      console.log(png);
+      
+      var z = new Blob([s],  {type: 'image/png'});
+      z.lastModifiedDate = new Date();
+      z.name = 'fileName.png';
+      console.log(z);
+
+      var uploader = new MediaUploader({
+                 file: z,
+                 token: accessToken,
+                 onComplete: function(data) {
+                     var element = document.createElement("pre");
+                     element.appendChild(document.createTextNode(data));
+                     document.getElementById('results').appendChild(element);
+                 }
+             });
+             uploader.upload();
+  }
 
 
 
