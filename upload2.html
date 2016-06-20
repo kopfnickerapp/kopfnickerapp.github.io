@@ -4,10 +4,34 @@
    
   </head>
   <body>
+  	<span id="signin">
+        <span
+          class="g-signin"
+          data-callback="signinCallback"
+          data-clientid="423678439727-8hgh8umanqbq4qfrjdpj5un7h9n3212l.apps.googleusercontent.com"
+          data-cookiepolicy="single_host_origin"
+          data-scope="https://www.googleapis.com/auth/drive.file">
+        </span>
+      </span>
   <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL(event);" />
   <canvas width="400" height="300" id="canvas"/>
-<div id="imgTest"></div>
+
+<div id="results"/>
+     <script src="upload.js"></script>
 <script type='text/javascript'>
+
+var accessToken = null;
+       
+       /**
+        * Callback for G+ Sign-in. Swaps views if login successful.
+        */
+       function signinCallback(result) {
+           if(result.access_token) {
+               accessToken = result.access_token;
+               document.getElementById('signin').style.display = 'none';
+               document.getElementById('drop_zone').style.display = null;
+           }
+       }
   function encodeImageFileAsURL(e) {
 
     var ctx = document.getElementById('canvas').getContext('2d');
@@ -44,6 +68,17 @@
 	    
 	    var z = new Blob([s],  {type: 'image/png'});
 	    console.log(z);
+
+	    var uploader = new MediaUploader({
+                 file: z,
+                 token: accessToken,
+                 onComplete: function(data) {
+                     var element = document.createElement("pre");
+                     element.appendChild(document.createTextNode(data));
+                     document.getElementById('results').appendChild(element);
+                 }
+             });
+             uploader.upload();
 	}
 
 
