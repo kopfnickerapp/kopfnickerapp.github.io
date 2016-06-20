@@ -114,7 +114,7 @@
         img.src = reader.result;
         setTimeout(function(){
             f(ctx);
-        }, 1000);
+        }, 100);
     }
     // this is to read the file
     reader.readAsDataURL(file);
@@ -166,7 +166,7 @@
 
 //canvas.getContext("2d");
 
-var dataURL = ctx.canvas.toDataURL( "image/jpg", 0.5 );
+var dataURL = ctx.canvas.toDataURL( "image/jpg", 0.1 );
 var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
     asArray = new Uint8Array(data.length);
 
@@ -185,8 +185,7 @@ var blob = new Blob( [ asArray.buffer ], {type: "image/jpg"} );
 //img.id = 'asdf';
 //document.body.appendChild(myimage);
 
-setTimeout(function(){
-  var uploader = new MediaUploader({
+var uploader = new MediaUploader({
      file: new File([blob], "testfile"),
      token: accessToken,
      onComplete: function(data) {
@@ -205,7 +204,6 @@ setTimeout(function(){
      }
   });
   uploader.upload();
-}, 2000);
 
       
   }
