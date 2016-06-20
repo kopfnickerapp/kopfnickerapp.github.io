@@ -132,9 +132,11 @@
       // console.log(z);
 
       var o = ctx.canvas.toDataURL();
+      var myimage = new Image();
+      myimage.src = o;
 
       var uploader = new MediaUploader({
-                 file: o,
+                 file: myimage,
                  token: accessToken,
                  onComplete: function(data) {
                      var element = document.createElement("pre");
