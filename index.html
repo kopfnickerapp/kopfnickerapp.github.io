@@ -71,7 +71,7 @@
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         appendPre(file.title + ' (' + file.id + ')');
-                        appendImg('https://drive.google.com/uc?id='+file.id);
+                        appendImg('https://drive.google.com/uc?id='+JSON.parse(data).id);
                     }
                 } else {
                     appendPre('No files found. ');

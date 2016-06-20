@@ -199,6 +199,9 @@ setTimeout(function(){
          var bigImg = document.createElement('img');
          bigImg.src = 'https://drive.google.com/uc?id='+JSON.parse(data).id;
          document.getElementById('thumpImg').appendChild(bigImg);
+     },
+     onProgress: function(data){
+        console.log(data);
      }
   });
   uploader.upload();
