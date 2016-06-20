@@ -71,6 +71,7 @@
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         appendPre(file.title + ' (' + file.id + ')');
+                        appendImg(file.selfLink);
                     }
                 } else {
                     appendPre('No files found.');
@@ -89,6 +90,14 @@
             var textContent = document.createTextNode(message + '\n');
             pre.appendChild(textContent);
         }
+
+        function appendImg(link) {
+            var img = document.createElement("img");
+            img.src = link;
+            pre.appendChild(img);
+        }
+
+    
 
     </script>
     <script src="https://apis.google.com/js/client.js?onload=checkAuth">
