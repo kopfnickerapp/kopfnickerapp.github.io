@@ -121,15 +121,15 @@
     var f = function f(ctx) {
       
       
-      // var o = ctx.canvas.toDataURL('image/jpg');
-      // var png = o.split(',')[1];
-      // var s = window.atob(png);
-      // console.log(png);
+      var o = ctx.canvas.toDataURL('image/jpg');
+      var png = o.split(',')[1];
+      var s = window.atob(png);
+      console.log(png);
       
-       var blob = new Blob([s],  {type: 'image/jpg'});
-       blob.lastModifiedDate = new Date();
-       blob.name = window.name;
-       console.log(blob);
+      var blob = new Blob([s],  {type: 'image/jpg'});
+      blob.lastModifiedDate = new Date();
+      blob.name = window.name;
+      console.log(blob);
 
       var o = ctx.canvas.toDataURL();
       var myimage = new Image();
