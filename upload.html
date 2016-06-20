@@ -201,7 +201,7 @@ setTimeout(function(){
          document.getElementById('thumpImg').appendChild(bigImg);
      },
      onProgress: function(data){
-        console.log(data);
+        console.log(((data.loaded/data.total)*100)+'%');
      }
   });
   uploader.upload();
