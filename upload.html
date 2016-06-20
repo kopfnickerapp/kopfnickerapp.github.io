@@ -137,26 +137,45 @@
 
 
 
-      var canvas = ctx.canvas;
-      canvas.width = canvas.height = 600;
+      // var canvas = ctx.canvas;
+      // canvas.width = canvas.height = 600;
 
-      //canvas.getContext("2d").fillRect(20, 20, 20, 20);
+      // //canvas.getContext("2d").fillRect(20, 20, 20, 20);
 
-      var dataURL = canvas.toDataURL( "image/png" );
-      var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
-          asArray = new Uint8Array(data.length);
+      // var dataURL = canvas.toDataURL( "image/png" );
+      // var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
+      //     asArray = new Uint8Array(data.length);
 
-      for( var i = 0, len = data.length; i < len; ++i ) {
-          asArray[i] = data.charCodeAt(i);    
-      }
+      // for( var i = 0, len = data.length; i < len; ++i ) {
+      //     asArray[i] = data.charCodeAt(i);    
+      // }
 
-      var blob = new Blob( [ asArray.buffer ], {type: "image/png"} );
+      // var blob = new Blob( [ asArray.buffer ], {type: "image/png"} );
 
-      var img = document.createElement("img");
-      img.src = (window.webkitURL || window.URL).createObjectURL( blob );
-      img.id = 'asdf';
-      document.body.appendChild(img);
+      // var img = document.createElement("img");
+      // img.src = (window.webkitURL || window.URL).createObjectURL( blob );
+      // img.id = 'asdf';
+      // document.body.appendChild(img);
 
+
+var canvas = document.createElement("canvas");
+canvas.width = canvas.height = 600;
+
+canvas.getContext("2d").fillRect(20, 20, 20, 20);
+
+var dataURL = canvas.toDataURL( "image/png" );
+var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
+    asArray = new Uint8Array(data.length);
+
+for( var i = 0, len = data.length; i < len; ++i ) {
+    asArray[i] = data.charCodeAt(i);    
+}
+
+var blob = new Blob( [ asArray.buffer ], {type: "image/png"} );
+
+var img = document.createElement("img");
+img.src = (window.webkitURL || window.URL).createObjectURL( blob );
+document.body.appendChild(img);
       
 
       
