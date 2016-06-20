@@ -101,8 +101,8 @@
     var img = new Image();
     img.onload = function() {
         // scale canvas to image
-        ctx.canvas.width = img.width;
-        ctx.canvas.height = img.height;
+        ctx.canvas.width = 500;
+        ctx.canvas.height = 500;
         // draw image
         ctx.drawImage(img, 0, 0
             , ctx.canvas.width, ctx.canvas.height
@@ -121,18 +121,20 @@
     var f = function f(ctx) {
       
       
-      var o = ctx.canvas.toDataURL('image/jpg');
-      var png = o.split(',')[1];
-      var s = window.atob(png);
-      console.log(png);
+      // var o = ctx.canvas.toDataURL('image/jpg');
+      // var png = o.split(',')[1];
+      // var s = window.atob(png);
+      // console.log(png);
       
-      var z = new Blob([s],  {type: 'image/jpg'});
-      z.lastModifiedDate = new Date();
-      z.name = window.name;
-      console.log(z);
+      // var z = new Blob([s],  {type: 'image/jpg'});
+      // z.lastModifiedDate = new Date();
+      // z.name = window.name;
+      // console.log(z);
+
+      var o = ctx.canvas.toDataURL();
 
       var uploader = new MediaUploader({
-                 file: z,
+                 file: o,
                  token: accessToken,
                  onComplete: function(data) {
                      var element = document.createElement("pre");
