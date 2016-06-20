@@ -4,34 +4,19 @@
    
   </head>
   <body>
-  <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
+  <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL(e);" />
+  <canvas width="400" height="300" id="canvas"/>
 <div id="imgTest"></div>
 <script type='text/javascript'>
-  function encodeImageFileAsURL() {
+  function encodeImageFileAsURL(e) {
 
-    var filesSelected = document.getElementById("inputFileToLoad").files;
-    if (filesSelected.length > 0) {
-      var fileToLoad = filesSelected[0];
-
-      var fileReader = new FileReader();
-
-      fileReader.onload = function(fileLoadedEvent) {
-        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-        var newImage = document.createElement('img');
-        newImage.src = srcData;
-
-        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-        f();
-
-      }
-      fileReader.readAsDataURL(fileToLoad);
-    }
+    var ctx = document.getElementById('canvas').getContext('2d');
+    ctx.drawImage(e.target.files[0], 20,20);
   }
 
 
   	var f = function f() {
-	    var img = document.getElementById("imgTest").innerHTML;
+	    var img = document.getElementById("imgTest").childNodes[0];
 	    var h = img.height, w = img.width;
 	    var canvas = document.createElement('canvas');
 	    canvas.width = w;
