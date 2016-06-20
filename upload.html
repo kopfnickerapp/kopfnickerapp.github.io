@@ -166,7 +166,7 @@
 
 //canvas.getContext("2d");
 
-var dataURL = ctx.canvas.toDataURL( "image/jpg" );
+var dataURL = ctx.canvas.toDataURL( "image/jpg", 0.5 );
 var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
     asArray = new Uint8Array(data.length);
 
