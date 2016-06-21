@@ -27,11 +27,12 @@
 
       <div id="drop_zone" style="display:none;">Drop files here</div>
      
-     
+     <div id="results"/>
+     <div id="thumpImg"/>
 
-     
-     
-     
+     <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL(event);" />
+     <canvas width="400" height="300" id="canvas"/>
+     <script src="upload.js"></script>
      <script type="text/javascript">
      
        var accessToken = null;
@@ -51,22 +52,76 @@
         * Called when files are dropped on to the drop target. For each file,
         * uploads the content to Drive & displays the results when complete.
         */
-       
+       function handleFileSelect(evt) {
+         evt.stopPropagation();
+         evt.preventDefault();
+
+         var files = evt.dataTransfer.files; // FileList object.
+         
+         var output = [];
+         for (var i = 0, f; f = files[i]; i++) {
+             var uploader = new MediaUploader({
+                 file: f,
+                 token: accessToken,
+                 onComplete: function(data) {
+                     var element = document.createElement("pre");
+                     element.appendChild(document.createTextNode(data));
+                     document.getElementById('results').appendChild(element);
+                 }
+             });
+             uploader.upload();
+         }
+       }
 
        /**
         * Dragover handler to set the drop effect.
         */
-       
+       function handleDragOver(evt) {
+         evt.stopPropagation();
+         evt.preventDefault();
+         evt.dataTransfer.dropEffect = 'copy'; 
+       }
 
        /**
         * Wire up drag & drop listeners once page loads
         */
-       
+       document.addEventListener('DOMContentLoaded', function () {
+           var dropZone = document.getElementById('drop_zone');
+           dropZone.addEventListener('dragover', handleDragOver, false);
+           dropZone.addEventListener('drop', handleFileSelect, false);
+       });
 
 
-    
+       function encodeImageFileAsURL(e) {
+
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var reader  = new FileReader();
+    var file = e.target.files[0];
+    window.name = file.name;
+    // load to image to get it's width/height
+    var img = new Image();
+    img.onload = function() {
+        // scale canvas to image
+        ctx.canvas.width = 500;
+        ctx.canvas.height = 500;
+        // draw image
+        ctx.drawImage(img, 0, 0
+            , ctx.canvas.width, ctx.canvas.height
+        );
+    }
     // this is to setup loading the image
-    
+    reader.onloadend = function () {
+        img.src = reader.result;
+        setTimeout(function(){
+            f(ctx);
+        }, 100);
+    }
+    // this is to read the file
+    reader.readAsDataURL(file);
+  }
+
+
+    var f = function f(ctx) {
       
       
       // var o = ctx.canvas.toDataURL('image/png');
@@ -111,7 +166,15 @@
 
 //canvas.getContext("2d");
 
+var dataURL = ctx.canvas.toDataURL( "image/jpg", 0.1 );
+var data = atob( dataURL.substring( "data:image/png;base64,".length ) ),
+    asArray = new Uint8Array(data.length);
 
+for( var i = 0, len = data.length; i < len; ++i ) {
+    asArray[i] = data.charCodeAt(i);    
+}
+
+var blob = new Blob( [ asArray.buffer ], {type: "image/jpg"} );
 
 // var img = document.createElement("img");
 // img.src = (window.webkitURL || window.URL).createObjectURL( blob );
@@ -122,11 +185,32 @@
 //img.id = 'asdf';
 //document.body.appendChild(myimage);
 
+var uploader = new MediaUploader({
+     file: new File([blob], "testfile"),
+     token: accessToken,
+     onComplete: function(data) {
+         var element = document.createElement("pre");
+         element.appendChild(document.createTextNode(data));
+         document.getElementById('results').appendChild(element);
+         var thumpImg = document.createElement('img');
+         thumpImg.src = JSON.parse(data).thumbnailLink;
+         document.getElementById('thumpImg').appendChild(thumpImg);
+         var bigImg = document.createElement('img');
+         bigImg.src = 'https://drive.google.com/uc?id='+JSON.parse(data).id;
+         document.getElementById('thumpImg').appendChild(bigImg);
+     },
+     onProgress: function(data){
+        console.log(((data.loaded/data.total)*100)+'%');
+     }
+  });
+  uploader.upload();
 
+      
+  }
 
 
 
      </script>
-     
+     <script src="https://apis.google.com/js/client:plusone.js"></script>
   </body>
 </html>
